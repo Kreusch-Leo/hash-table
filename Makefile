@@ -8,14 +8,14 @@
 CC      = gcc
 CFLAGS  = -Wall -Wextra -Werror -g -std=c99
 LDLIBS  = -lm
-MAIN    = myrb
+MAIN    = myht
 ENTREGA = lk24
 
 # Lista de arquivos de cabeçalho
-HDR     = rb_tree.h
+HDR     = hash_table.h
 
 # Lista de arquivos-objeto 
-OBJ     = rb_tree.o
+OBJ     = hash_table.o
 
 # Regras de compilação
 
@@ -27,7 +27,7 @@ $(MAIN): $(MAIN).o $(OBJ)
 $(MAIN).o: $(MAIN).c $(HDR)
 
 # Construir os TADs
-rb_tree.o: rb_tree.c rb_tree.h
+hash_table.o: hash_table.c hash_table.h
 	$(CC) $(CFLAGS) -c $<
 
 # Regras adicionais
