@@ -12,6 +12,27 @@ struct cuckoo_ht_t {
     void **content_t2;         // pointer a vector of pointers t2
 };
 
+struct table_entry {
+    int key;
+    int table; // 1 for T1, 2 for T2
+    int index;
+};
+
+/* First table hash function
+    
+    In  : key, size
+    Out : position
+*/
+int h1(int k, int m);
+
+/* Second table hash function
+    
+    In  : key, size
+    Out : position
+*/
+int h2(int k, int m);
+
+
 /* Creates a cuckoo hash structure with a given size
 
     In  : size (m)
@@ -35,7 +56,7 @@ int destroy_cuckoo_ht(struct cuckoo_ht_t *t);
     In  : pointer to struct, key value
     Out : successful operation (0), error (1)
 */
-int add_content(struct cuckoo_ht_t *t, int k);
+int add_content(struct cuckoo_ht_t *t, int k, void *c);
 
 /* Searchs for data in the ht, 
     
@@ -43,15 +64,15 @@ int add_content(struct cuckoo_ht_t *t, int k);
     Out : if exists: pointer to content
           else: NULL
 */
-void *search_content(struct cuckoo_ht_t *t);
+void *search_content(struct cuckoo_ht_t *t, int k, int *table, int *pk);
 
 /* Removes data from the ht, 
     
     In  : pointer to struct, key value
-    Out : if exists: pointer to content
-          else: NULL
+    Out : if exists: value of content
+          else: -1
 */
-void *remove_content(struct cuckoo_ht_t *t, int k);
+int remove_content(struct cuckoo_ht_t *t, int k);
 
 /* Prints content from the structure according to the assigment prompt, 
     

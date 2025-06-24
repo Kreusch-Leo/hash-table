@@ -25,12 +25,14 @@ int main(int argc, char *argv[]) {
 
     while (scanf(" %c %d", &op, &chave) == 2) {
         if (op == 'i') {
-            add_content(cuckoo_ht, chave);
+            add_content(cuckoo_ht, chave, NULL);
         } else if (op == 'r') {
             remove_content(cuckoo_ht, chave);
         } else {
             fprintf(stderr, "Operação inválida: %c\n", op);
         }
+        //print_tables(cuckoo_ht);
+        //printf("\n");
     }
 
     print_tables(cuckoo_ht);

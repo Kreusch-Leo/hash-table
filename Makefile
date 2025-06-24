@@ -1,6 +1,6 @@
-# Makefile para o trabalho I (Arvore Red-Black) de Algoritmos e Estruturas de Dados III
+# Makefile para o trabalho II (Cuckoo Hash) de Algoritmos e Estruturas de Dados III
 # Leonardo Kreusch GRR20245579 - Bacharelado em Ciencia da Computacao - UFPR
-# Ultima modificacao em 20/04/2025
+# Ultima modificacao em 21/06/2025
 
 # Baseado no Makefile desenvolvido pelo Professor Dr. Carlos Maziero - DINF/UFPR
 # Original disponivel em https://wiki.inf.ufpr.br/maziero/doku.php?id=c:theboys-2024-2 , mas nao adequado a este projeto
@@ -11,15 +11,15 @@ LDLIBS  = -lm
 MAIN    = myht
 ENTREGA = lk24
 
-# Lista de arquivos de cabeçalho
+# Lista de arquivos de cabecalho
 HDR     = hash_table.h
 
 # Lista de arquivos-objeto 
 OBJ     = hash_table.o
 
-# Regras de compilação
+# Regras de compilacao
 
-# Construir o executável principal
+# Construir o executavel principal
 $(MAIN): $(MAIN).o $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDLIBS)
 
@@ -62,3 +62,22 @@ targz: clean
 # Limpar arquivos temporarios
 clean:
 	rm -f *~ $(OBJ) $(MAIN).o $(MAIN) $(ENTREGA).tgz $(ENTREGA).tar.gz
+
+
+TESTS := 1 2 3 4
+
+.PHONY: test_all
+test_all: $(addprefix test_, $(TESTS))
+
+# Pretty test rule
+test_%: myht
+	@echo ""
+	@echo "====================[ TEST $* ]===================="
+	@echo ""
+	@./myht < tests/teste$*.in > a$*.try
+	@diff -u a$*.try tests/teste$*.out || \
+		(echo ""; echo "❌ Test $* FAILED!"; echo "")
+	@echo ""
+	@echo "✅ Test $* PASSED!"
+	@echo "===================================================="
+	@echo ""
